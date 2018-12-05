@@ -1,12 +1,12 @@
 <template>
-  <v-app id="inspire">
+  <v-app id="inspire" dark>
     <v-navigation-drawer
       v-model="drawer"
       fixed
       app
     >
       <v-list dense>
-        <v-list-tile to="/">
+        <v-list-tile to="/" @click.stop="drawer = !drawer">
           <v-list-tile-action>
             <v-icon>home</v-icon>
           </v-list-tile-action>
@@ -14,22 +14,30 @@
             <v-list-tile-title>Home</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile to="/about">
+        <v-list-tile to="/recipes" @click.stop="drawer = !drawer">
           <v-list-tile-action>
-            <v-icon>contact_mail</v-icon>
+            <v-icon>fas fa-utensils</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title>Contact</v-list-tile-title>
+            <v-list-tile-title>Recipes</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile to="/about" @click.stop="drawer = !drawer">
+          <v-list-tile-action>
+            <v-icon>far fa-grin-hearts</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>About</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
     <v-toolbar color="indigo" dark fixed app>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <v-toolbar-title>Application</v-toolbar-title>
+      <v-toolbar-title>Nutry</v-toolbar-title>
     </v-toolbar>
     <v-content>
-      <v-container fluid fill-height>
+      <v-container fluid>
         <v-layout
           justify-center
           align-center
@@ -38,9 +46,6 @@
         </v-layout>
       </v-container>
     </v-content>
-    <v-footer color="indigo" app>
-      <span class="white--text">&copy; 2017</span>
-    </v-footer>
   </v-app>
 </template>
 

@@ -1,26 +1,13 @@
 # nutry
 
-## Project setup
-```
-yarn install
-```
+* Implémenter AXIOS + API OpenFoodFacts
+* Pattern store fetch API
+* Ajouter une recette :
+* Liste des ingrédients
+* fetch info nutrition sur
+* O.F.F. + update du store
+* ingrédient x quantité x personne = stats nutritionnels repas / personnes
+* Graph ?
+* Ajout photo dans recette, possible PWA ?
+* Persistance data (vuex-persist + vuex-router-sync)
 
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
-
-### Compiles and minifies for production
-```
-yarn run build
-```
-
-### Lints and fixes files
-```
-yarn run lint
-```
-
-### Run your unit tests
-```
-yarn run test:unit
-```
