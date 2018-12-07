@@ -34,7 +34,7 @@
     </v-navigation-drawer>
     <v-toolbar color="indigo" dark fixed app>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <v-toolbar-title>Nutry</v-toolbar-title>
+      <v-toolbar-title>Nutry {{headerText}}</v-toolbar-title>
     </v-toolbar>
     <v-content>
       <v-container fluid>
@@ -46,16 +46,59 @@
         </v-layout>
       </v-container>
     </v-content>
+    <v-footer
+      dark
+      height="auto"
+    >
+      <v-layout
+        xs-12
+        align-start justify-space-around row fill-height
+      >
+      <v-btn
+        icon
+        to="/"
+      >
+        <v-icon size="24px">home</v-icon>
+      </v-btn>
+      <v-btn
+        icon
+        to="/recipes"
+      >
+        <v-icon size="24px">fas fa-utensils</v-icon>
+      </v-btn>
+      <v-btn
+        icon
+        to="/about"
+      >
+        <v-icon size="24px">far fa-grin-hearts</v-icon>
+      </v-btn>
+      </v-layout>
+    </v-footer>
   </v-app>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   data: () => ({
-    drawer: null
+    drawer: null,
+    icons: [
+      'fab fa-facebook',
+      'fab fa-twitter',
+      'fab fa-google-plus',
+      'fab fa-linkedin',
+      'fab fa-instagram'
+    ]
   }),
+
   props: {
     source: String
+  },
+
+  computed: {
+    ...mapGetters('layout', [
+      'headerText'
+    ])
   }
 }
 </script>
