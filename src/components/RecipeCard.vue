@@ -4,7 +4,7 @@
   >
     <v-card>
       <v-img
-        :src="recipe.src"
+        :src="recipe.imgSrc"
         height="200px"
       >
         <v-container

@@ -11,7 +11,7 @@
         <h1>Last recipes :</h1>
       </v-flex>
       <recipe-card
-        v-for="recipe in recipes"
+        v-for="recipe in lastRecipes"
         :key="recipe.title"
         :recipe="recipe"
       />
@@ -21,19 +21,17 @@
 
 <script>
 import RecipeCard from '@/components/RecipeCard.vue'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'home',
   components: {
     RecipeCard
   },
-  data: () => ({
-    recipes: [
-      { title: 'Tartiflette', src: `${process.env.BASE_URL}img/tartiflette.jpg`, kcalByPerson: 480 },
-      { title: 'Salade', src: `${process.env.BASE_URL}img/salade.jpg`, kcalByPerson: 214 },
-      { title: 'Tian', src: `${process.env.BASE_URL}img/tian.jpg`, kcalByPerson: 320 },
-      { title: 'Pizza', src: `${process.env.BASE_URL}img/pizza.jpg`, kcalByPerson: 395 }
-    ]
-  })
+  computed: {
+    ...mapGetters('recipes', [
+      'lastRecipes'
+    ])
+  }
 }
 </script>
