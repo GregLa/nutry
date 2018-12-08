@@ -2,7 +2,7 @@
   <v-flex
     xs6
   >
-    <v-card>
+    <v-card v-bind="$attrs" v-on="$listeners">
       <v-img
         :src="recipe.imgSrc"
         height="200px"
@@ -31,6 +31,7 @@
 <script>
 export default {
   name: 'recipe-card',
+  inheritAttrs: false,
   props: {
     recipe: {
       type: Object,

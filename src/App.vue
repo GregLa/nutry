@@ -49,6 +49,7 @@
     <v-footer
       dark
       height="auto"
+      app
     >
       <v-layout
         xs-12
