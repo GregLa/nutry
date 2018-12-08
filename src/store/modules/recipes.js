@@ -4,13 +4,22 @@ import recipesApi from '@/api/recipes'
 const state = {
   recipes: [],
   recipe: {
-    name: null
+    name: 'New recipe'
   }
 }
 
 const getters = {
   lastRecipes: (state, getters) => {
     return state.recipes
+  },
+
+  getRecipe: (state, getters) => (id) => {
+    const recipe = state.recipes.find(r => r.id === id)
+    return recipe !== undefined ? recipe : null
+  },
+
+  getRecipeModel: (state, getters) => {
+    return deepCopy(state.recipe)
   }
 }
 

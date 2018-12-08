@@ -2,12 +2,12 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import layout from './modules/layout'
 import recipes from './modules/recipes'
-import ingredient from './modules/ingredients'
+import ingredients from './modules/ingredients'
 
 const modules = {
   layout,
   recipes,
-  ingredient
+  ingredients
 }
 
 Vue.use(Vuex)
