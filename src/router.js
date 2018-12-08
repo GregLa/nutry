@@ -20,6 +20,14 @@ const router = new Router({
       },
       component: () => import('./views/Recipes.vue')
     },
+    { // Add dynamic string interpolation for this route header title
+      path: '/recipe/:id',
+      name: 'recipe',
+      meta: {
+        headerDisplayName: 'Recipe'
+      },
+      component: () => import('./views/Recipe.vue')
+    },
     {
       path: '/about',
       name: 'about',
@@ -27,6 +35,14 @@ const router = new Router({
         headerDisplayName: 'About'
       },
       component: () => import('./views/About.vue')
+    },
+    {
+      path: '/reject',
+      name: 'reject',
+      meta: {
+        headerDisplayName: 'Reject'
+      },
+      component: () => import('./views/Reject.vue')
     }
   ]
 })
