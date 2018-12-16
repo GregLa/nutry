@@ -45,6 +45,7 @@
             <v-text-field
               label="Quantité (g)"
               v-model="ingredient.grams"
+              @change="$forceUpdate()"
             />
           </v-flex>
         </v-layout>
@@ -55,7 +56,16 @@
       <v-list dense>
         <v-list-tile>
           <v-list-tile-content><h2>Informations nutritionnelles</h2></v-list-tile-content>
-          <v-list-tile-content class="align-end">/ 100g</v-list-tile-content>
+          <v-list-tile-content class="align-end">
+            <v-flex xs5>
+              <v-select
+                :items="scales"
+                v-model="scale"
+                item-value="value"
+                @change="$forceUpdate()"
+              />
+            </v-flex>
+          </v-list-tile-content>
         </v-list-tile>
       </v-list>
       <v-divider></v-divider>
@@ -95,7 +105,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import { deepCopy } from '@/utils'
 import store from '@/store'
 export default {
@@ -106,38 +116,54 @@ export default {
       ingredients: state => state.ingredients.ingredients
     }),
 
+    ...mapGetters({
+      getIngredient: 'ingredients/getIngredient'
+    }),
+
+    totalWeight () {
+      return this.recipe.composition.reduce((accumulator, currentValue) => accumulator + currentValue.grams, 0)
+    },
+
     getKCal () {
-      // return this.recipe.composition.reduce(ingr)
-      return 'XXX'
+      const totalKcal = this.getNutritionnalTotalByValueType('kcal')
+      return this.getNutrionValueByScale(totalKcal).toFixed(2)
     },
 
     getProtein () {
-      return 'XXX'
+      const totalProtein = this.getNutritionnalTotalByValueType('protein')
+      return this.getNutrionValueByScale(totalProtein).toFixed(2)
     },
 
     getCarbohydrates () {
-      return 'XXX'
+      const totalCarbohydrates = this.getNutritionnalTotalByValueType('carbohydrates')
+      return this.getNutrionValueByScale(totalCarbohydrates).toFixed(2)
     },
 
     getLipids () {
-      return 'XXX'
+      const totalLipids = this.getNutritionnalTotalByValueType('lipids')
+      return this.getNutrionValueByScale(totalLipids).toFixed(2)
     },
 
     getSugars () {
-      return 'XXX'
+      const totalSugars = this.getNutritionnalTotalByValueType('sugars')
+      return this.getNutrionValueByScale(totalSugars).toFixed(2)
     },
 
     getSatturedFatAcids () {
-      return 'XXX'
+      const totalSatturedFatAcids = this.getNutritionnalTotalByValueType('saturatedFatAcids')
+      return this.getNutrionValueByScale(totalSatturedFatAcids).toFixed(2)
     },
 
     getSalt () {
-      return 'XXX'
+      const totalSalt = this.getNutritionnalTotalByValueType('salt')
+      return this.getNutrionValueByScale(totalSalt).toFixed(2)
     }
   },
 
   data: () => ({
-    recipe: {}
+    recipe: {},
+    scale: 'total',
+    scales: [{ text: '/ 100g', value: '100g' }, { text: '/ personne', value: 'persons' }, { text: 'Total', value: 'total' }]
   }),
 
   // Navigation guard
@@ -161,6 +187,32 @@ export default {
   methods: {
     setRecipe (recipe) {
       this.recipe = recipe
+    },
+
+    getNutritionnalTotalByValueType (type) {
+      if (this.recipe.composition === undefined) return 0
+
+      return this.recipe.composition.reduce((accumulator, currentIngredient) => {
+        const ingredient = this.getIngredient(currentIngredient.ingredientId)
+        if (ingredient) {
+          const totalForThisNutritionValue = (currentIngredient.grams / 100) * ingredient[type]
+          return accumulator + totalForThisNutritionValue
+        } else {
+          // Display error message
+          return accumulator
+        }
+      }, 0)
+    },
+
+    getNutrionValueByScale (value) {
+      switch (this.scale) {
+        case '100g':
+          return (100 * value) / this.totalWeight
+        case 'persons':
+          return value / this.recipe.persons
+        default:
+          return value
+      }
     }
   },
 

@@ -12,6 +12,14 @@ const getters = {
     } else {
       return []
     }
+  },
+
+  getIngredient: (state, getters) => (id) => {
+    if (kindOf(id) === 'number') {
+      return state.ingredients.find(i => i.id === id)
+    } else {
+      return null
+    }
   }
 }
 
